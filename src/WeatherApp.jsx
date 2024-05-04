@@ -1,6 +1,8 @@
 const WeatherApp = () => {
   return (
-    <div>WeatherApp</div>
+    <div className="container">
+        <h1>Aplicación del Clima</h1>
+    </div>
   )
 }
 
