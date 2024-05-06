@@ -3,7 +3,9 @@ import { useState } from "react"
 const WeatherApp = () => {
 
   const urlbase = import.meta.env.VITE_URL_BASE
+  const urlImg = import.meta.env.VITE_IMG_URL
   const apikey = import.meta.env.VITE_API_KEY
+  const diffKelvin = 273.15
   
   const [ciudad, setCiudad] = useState('')
   const [dataClima, setDataClima] = useState(null)
@@ -17,7 +19,6 @@ const WeatherApp = () => {
       const response = await fetch(`${urlbase}?q=${ciudad}&appid=${apikey}`)
       const data = await response.json()
       setDataClima(data)
-      console.log(data)
     } catch (error) {
       console.error(error)
     }
@@ -39,6 +40,16 @@ const WeatherApp = () => {
         />
         <button type="submit">Buscar</button>
       </form>
+      {
+        dataClima && (
+          <div>
+            <h2>{dataClima?.name}</h2>
+            <p>Temperatura: {parseInt(dataClima?.main?.temp - diffKelvin)}ºC</p>
+            <p>Condición meteorológica: {dataClima?.weather[0]?.description}</p>
+            <img src={`${urlImg}${dataClima?.weather[0]?.icon}@2x.png`} alt="" />
+          </div>
+        )
+      }
     </div>
   )
 }
