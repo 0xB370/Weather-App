@@ -1,33 +1,11 @@
-import { useState } from "react"
+import useFetch from "./hooks/useFetch"
 
 const WeatherApp = () => {
 
-  const urlbase = import.meta.env.VITE_URL_BASE
   const urlImg = import.meta.env.VITE_IMG_URL
-  const apikey = import.meta.env.VITE_API_KEY
   const diffKelvin = 273.15
-  
-  const [ciudad, setCiudad] = useState('')
-  const [dataClima, setDataClima] = useState(null)
 
-  const handleCambioCiudad = (e) => {
-    setCiudad(e.target.value)
-  }
-
-  const fetchClima = async() => {
-    try {
-      const response = await fetch(`${urlbase}?q=${ciudad}&appid=${apikey}`)
-      const data = await response.json()
-      setDataClima(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (ciudad.length > 0) fetchClima()
-  }
+  const {ciudad, dataClima, handleCambioCiudad, handleSubmit} = useFetch()
 
   return (
     <div className="container">
